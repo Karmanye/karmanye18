@@ -1,0 +1,77 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ _('Welcome Buyer .. , %(nickname)s!', nickname=g.user.nickname) }}</h1>
+    {% include 'flash.html' %}
+    <div class="well">
+        <form class="form-horizontal" action="" method="post" name="buyer">
+            {{ form.hidden_tag() }}
+            <div class="control-group{% if form.bfname.errors %} error{% endif %}">
+                <label class="control-label" for="post">{{ _('Buyer First Name:') }}</label>
+                <div class="controls">
+                    {{ form.bfname(size=30, maxlength=140) }}
+                    {% for error in form.bfname.errors %}
+                        <span class="help-inline">[{{ error }}]</span><br>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="control-group{% if form.blname.errors %} error{% endif %}">
+                <label class="control-label" for="post">{{ _('Buyer Last Name:') }}</label>
+                <div class="controls">
+                    {{ form.blname(size=30, maxlength=140) }}
+                    {% for error in form.blname.errors %}
+                        <span class="help-inline">[{{ error }}]</span><br>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="control-group{% if form.bemail.errors %} error{% endif %}">
+                <label class="control-label" for="post">{{ _('Buyer Email:') }}</label>
+                <div class="controls">
+                    {{ form.bemail(size=30, maxlength=140) }}
+                    {% for error in form.bemail.errors %}
+                        <span class="help-inline">[{{ error }}]</span><br>
+                    {% endfor %}
+                </div>
+            </div>
+            
+             <div class="control-group{% if form.bmobile.errors %} error{% endif %}">
+                <label class="control-label" for="post">{{ _('Buyer Mobile:') }}</label>
+                <div class="controls">
+                    {{ form.bmobile(size=30, maxlength=140) }}
+                    {% for error in form.bmobile.errors %}
+                        <span class="help-inline">[{{ error }}]</span><br>
+                    {% endfor %}
+                </div>
+            </div>
+            
+             <div class="control-group{% if form.bstate.errors %} error{% endif %}">
+                <label class="control-label" for="post">{{ _('Buyer State:') }}</label>
+                <div class="controls">
+                    {{ form.bstate(size=30, maxlength=140) }}
+                    {% for error in form.bstate.errors %}
+                        <span class="help-inline">[{{ error }}]</span><br>
+                    {% endfor %}
+                </div>
+            </div>
+            
+             <div class="control-group{% if form.bcountry.errors %} error{% endif %}">
+                <label class="control-label" for="post">{{ _('Buyer Country:') }}</label>
+                <div class="controls">
+                    {{ form.bcountry(size=30, maxlength=140) }}
+                    {% for error in form.bcountry.errors %}
+                        <span class="help-inline">[{{ error }}]</span><br>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn-primary" type="submit" value="{{ _('Register Buyer!') }}">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

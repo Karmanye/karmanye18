@@ -9,7 +9,22 @@ class LoginForm(Form):
     openid = StringField('openid', validators=[DataRequired()])
     remember_me = BooleanField('remember_me', default=False)
 
+class BuyerForm(Form):
+    bfname = StringField('bfname', validators=[DataRequired()])
+    blname = StringField('blname', validators=[DataRequired()])
+    bemail = StringField('bemail', validators=[DataRequired()])
+    bmobile = StringField('bmobile', validators=[DataRequired()])
+    bstate = StringField('bstate', validators=[DataRequired()])
+    bcountry = StringField('bcountry', validators=[DataRequired()])
 
+class EditBuyerForm(Form):
+    bfname = StringField('bfname', validators=[DataRequired()])
+    blname = StringField('blname', validators=[DataRequired()])
+    bemail = StringField('bemail', validators=[DataRequired()])
+    bmobile = StringField('bmobile', validators=[DataRequired()])
+    bstate = StringField('bstate', validators=[DataRequired()])
+    bcountry = StringField('bcountry', validators=[DataRequired()])
+    
 class EditForm(Form):
     nickname = StringField('nickname', validators=[DataRequired()])
     about_me = TextAreaField('about_me', validators=[Length(min=0, max=140)])

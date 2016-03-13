@@ -47,6 +47,8 @@
           <a class="brand" href="/">microblog</a>
             <ul class="nav">
               <li><a href="{{ url_for('index') }}">{{ _('Home') }}</a></li>
+              <li><a href="{{ url_for('buyer') }}">{{ _('Register Buyer') }}</a></li>
+               <li><a href="{{ url_for('editbuyer') }}">{{ _('Edit Buyer') }}</a></li>
               {% if g.user.is_authenticated %}
               <li><a href="{{ url_for('user', nickname=g.user.nickname) }}">{{ _('Your Profile') }}</a></li>
               <li><a href="{{ url_for('logout') }}">{{ _('Logout') }}</a></li>

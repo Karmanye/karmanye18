@@ -6,8 +6,8 @@ from flask.ext.babel import gettext
 from datetime import datetime
 from guess_language import guessLanguage
 from app import app, db, lm, oid, babel
-from .forms import LoginForm, EditForm, PostForm, SearchForm
-from .models import User, Post
+from .forms import LoginForm, EditForm, PostForm, SearchForm, BuyerForm,EditBuyerForm
+from .models import User, Post, Buyer
 from .emails import follower_notification
 from .translate import microsoft_translate
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS, LANGUAGES
@@ -44,6 +44,55 @@ def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
 
+@app.route('/buyer', methods=['GET', 'POST'])
+@login_required
+def buyer():
+    #flash(gettext('Pre form ....'))
+    form = BuyerForm()
+    #flash(gettext('Post form ...'))
+    #flash(form.validate_on_submit())
+    if form.validate_on_submit():
+        buyer = Buyer(bfname=form.bfname.data,blname=form.blname.data, 
+                    bemail=form.bemail.data,bmobile=form.bmobile.data,
+                    bstate=form.bstate.data,bcountry=form.bcountry.data,
+                    timestamp=datetime.utcnow()
+                    )
+        db.session.add(buyer)
+        db.session.commit()
+        flash(gettext('Buyer is now registered ... !'))
+        return redirect(url_for('buyer'))
+    return render_template('buyer.html',
+                           title='Home',
+                           form=form)
+
+@app.route('/editbuyer', methods=['GET', 'POST'])
+@login_required
+def editbuyer():
+    #form = EditBuyerForm(g.user.nickname)
+    form = EditBuyerForm()
+    b = Buyer.query.filter_by(bfname='ritesh1121').first()
+    #flash(b.bfname)
+    #flash(b.bemail)
+    if form.validate_on_submit():
+        b.bfname = form.bfname.data
+        b.blname = form.blname.data
+        b.bemail = form.bemail.data
+        b.bmobile = form.bmobile.data
+        b.bstate = form.bstate.data
+        b.bcountry = form.bcountry.data
+        db.session.add(b)
+        db.session.commit()
+        flash(gettext('Your changes have been saved.'))
+        return redirect(url_for('editbuyer'))
+    elif request.method != "POST":
+        form.bfname.data = b.bfname
+        form.blname.data = b.blname
+        form.bemail.data = b.bemail
+        form.bmobile.data = b.bmobile
+        form.bstate.data = b.bstate
+        form.bcountry.data = b.bcountry
+    return render_template('editbuyer.html', form=form)
+
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -66,6 +115,8 @@ def index(page=1):
                            title='Home',
                            form=form,
                            posts=posts)
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -129,6 +180,7 @@ def user(nickname, page=1):
                            posts=posts)
 
 
+                           
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():

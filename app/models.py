@@ -2,6 +2,7 @@ from hashlib import md5
 import re
 from app import db
 from app import app
+from config import WHOOSH_ENABLED
 
 import sys
 if sys.version_info >= (3, 0):
@@ -104,7 +105,24 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post %r>' % (self.body)
+        
+class Buyer(db.Model):
+    bid = db.Column(db.Integer, primary_key=True)
+    bfname = db.Column(db.String(50))
+    blname = db.Column(db.String(50))
+    bemail = db.Column(db.String(100))
+    bmobile = db.Column(db.String(50))
+    bstate = db.Column(db.String(50))
+    bcountry = db.Column(db.String(50))
+    timestamp = db.Column(db.DateTime)
+    
+    def __repr__(self):
+        return '<Buyer %r>' % (self.bfname)
 
+
+enable_search = WHOOSH_ENABLED
+if enable_search:
+    import flask.ext.whooshalchemy as whooshalchemy
 
 if enable_search:
     whooshalchemy.whoosh_index(app, Post)

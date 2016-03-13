@@ -40,3 +40,6 @@ MAX_SEARCH_RESULTS = 50
 # microsoft translation service
 MS_TRANSLATOR_CLIENT_ID = '__ritesh_kumar464__' # enter your MS translator app id here
 MS_TRANSLATOR_CLIENT_SECRET = 'QeDAa2efq4Pl/5lRiqXhvrsmhAIksibSAQr4CnT8PVY=' # enter your MS translator app secret here
+
+# Whoosh does not work on Heroku
+WHOOSH_ENABLED = os.environ.get('HEROKU') is None
